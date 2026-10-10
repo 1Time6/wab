@@ -74,7 +74,6 @@ if (Test-Path (Join-Path $root '.git')) {
 } elseif (-not $hasGit) {
   Warn '跳过（没有 Git）'
 } else {
-  Write-Host '  第一次连接会弹出 GitHub 登录窗口，选「Sign in with your browser」，在浏览器里登录并点「Authorize」。'
   git init -q
   git remote add origin $repoUrl
   git fetch origin main
@@ -83,7 +82,7 @@ if (Test-Path (Join-Path $root '.git')) {
     Ok '已连接，以后双击桌面「WAB 更新」即可更新'
   } else {
     Remove-Item -Recurse -Force (Join-Path $root '.git')
-    Warn '连接失败（可能是没登录成功或网络问题）。不影响使用，只是暂时不能一键更新，重新运行本脚本可以再试。'
+    Warn '连接失败（多半是网络问题）。不影响使用，只是暂时不能一键更新，重新运行本脚本可以再试。'
   }
 }
 

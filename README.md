@@ -171,12 +171,12 @@ npx @puppeteer/browsers install chrome@stable
 
 ## 十、更新
 
-代码在 GitHub 私有仓库 <https://github.com/1Time6/wab>。
+代码在 GitHub 公开仓库 <https://github.com/1Time6/wab>，下载和更新都不用登录。
 
 ### 第一次：用 git 装（只做一次）
 
 1. 装 Git for Windows：<https://git-scm.com/download/win>（一路下一步）
-2. 打开命令行，克隆到你想放的位置（会弹浏览器让你登录 GitHub 授权）：
+2. 打开命令行，克隆到你想放的位置：
 
    ```bat
    git clone https://github.com/1Time6/wab.git C:\WAB
