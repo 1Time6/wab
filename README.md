@@ -16,7 +16,9 @@ AdsPower 环境 N (WhatsApp Web + 扩展) ─┘
 
 ## 一、安装服务（只做一次）
 
-需要 Node.js 20 以上（<https://nodejs.org> 下载 LTS 版装上即可）。Windows / macOS 都可以。
+需要 Node.js 22.13 以上（<https://nodejs.org> 下载 LTS 版装上即可；服务用了 `node:sqlite`，Node 20 跑不了）。Windows / macOS 都可以。
+
+> **Windows 用户直接看 [使用教程.md](使用教程.md)**，双击 `一键安装.cmd` 就能装好，不用看下面这些。
 
 ```bash
 cd WAB

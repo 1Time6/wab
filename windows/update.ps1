@@ -13,7 +13,7 @@ function Run($what, [scriptblock]$cmd) {
 }
 
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) { Fail '找不到 git，请先安装 Git for Windows：https://git-scm.com/download/win' }
-if (-not (Get-Command node -ErrorAction SilentlyContinue)) { Fail '找不到 node，请先安装 Node.js 20+' }
+if (-not (Get-Command node -ErrorAction SilentlyContinue)) { Fail '找不到 node，请先双击「一键安装.cmd」或安装 Node.js 22.13+' }
 Set-Location $root
 if (-not (Test-Path (Join-Path $root '.git'))) { Fail "$root 不是 git 仓库，请按 README「更新」一节用 git clone 重新安装" }
 
