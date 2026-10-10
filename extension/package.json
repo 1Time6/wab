@@ -1,0 +1,22 @@
+{
+  "name": "@wab/extension",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node build.mjs --watch",
+    "zip": "node build.mjs --zip",
+    "build:mock": "node build.mjs --mock",
+    "e2e": "node build.mjs --mock && node test/e2e.mjs"
+  },
+  "dependencies": {
+    "@wppconnect/wa-js": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.287",
+    "esbuild": "^0.24.0",
+    "puppeteer-core": "^24.43.1",
+    "typescript": "^5.6.3"
+  }
+}

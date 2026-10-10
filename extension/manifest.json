@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "WAB 客户去重助手",
+  "version": "0.1.0",
+  "description": "读取 WhatsApp Web 聊天列表并上报到本机 WAB 服务，发现同一客户出现在多个账号时在页面上提醒。",
+  "permissions": ["storage", "tabs"],
+  "host_permissions": [
+    "https://web.whatsapp.com/*",
+    "http://127.0.0.1/*",
+    "http://127.0.0.1:*/*",
+    "http://localhost/*",
+    "http://localhost:*/*"
+  ],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "content_scripts": [
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["inject.js"],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["content.js"],
+      "css": ["ui.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "WAB 客户去重",
+    "default_icon": { "16": "icon16.png", "48": "icon48.png", "128": "icon128.png" }
+  },
+  "icons": { "16": "icon16.png", "48": "icon48.png", "128": "icon128.png" }
+}

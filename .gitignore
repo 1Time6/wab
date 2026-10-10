@@ -1,0 +1,12 @@
+node_modules/
+dist/
+server/data/*.db
+server/data/*.db-*
+extension/dist/
+*.zip
+.DS_Store
+run-hidden.vbs
+dist-mock/
+extension/test/screenshots/
+server/data/
+.claude/settings.local.json

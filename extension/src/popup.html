@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>WAB</title>
+<style>
+  body { width: 300px; margin: 0; padding: 12px; font: 13px/1.5 -apple-system, system-ui, "PingFang SC", sans-serif; color: #222; }
+  h1 { font-size: 15px; margin: 0 0 8px; }
+  .row { display: flex; justify-content: space-between; margin: 4px 0; }
+  .row span:first-child { color: #777; }
+  .ok { color: #1f8a4c; } .bad { color: #e5484d; } .warn { color: #ad6800; }
+  .err { background: #fff1f0; color: #a8071a; padding: 6px 8px; border-radius: 6px; margin: 8px 0; word-break: break-all; }
+  .actions { display: flex; gap: 8px; margin: 10px 0 6px; }
+  button { flex: 1; padding: 6px 0; border: 1px solid #ccc; border-radius: 6px; background: #fafafa; cursor: pointer; }
+  button.primary { background: #1f8a4c; color: #fff; border-color: #1f8a4c; }
+  label { display: block; color: #777; margin-top: 8px; }
+  input { width: 100%; box-sizing: border-box; padding: 5px 6px; border: 1px solid #ccc; border-radius: 6px; }
+  .hint { color: #999; font-size: 11px; margin-top: 6px; }
+</style>
+</head>
+<body>
+  <h1>WAB 客户去重助手</h1>
+  <div class="row"><span>WhatsApp 状态</span><b id="wpp">—</b></div>
+  <div class="row"><span>当前账号</span><b id="account">—</b></div>
+  <div class="row"><span>聊天数</span><b id="chats">—</b></div>
+  <div class="row"><span>重复客户</span><b id="dups">—</b></div>
+  <div class="row"><span>上次同步</span><b id="last">—</b></div>
+  <div id="error" class="err" hidden></div>
+  <div class="actions">
+    <button id="sync" class="primary">立即同步</button>
+    <button id="open">打开总览面板</button>
+  </div>
+  <label>服务地址</label>
+  <input id="server" placeholder="http://127.0.0.1:3900">
+  <div class="hint">改完自动保存；下次同步生效。</div>
+  <script src="popup.js"></script>
+</body>
+</html>

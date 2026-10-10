@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Mock WhatsApp Web</title>
+<style>
+  body { margin: 0; font: 14px system-ui; display: flex; height: 100vh; }
+  #pane-side { width: 320px; border-right: 1px solid #ddd; overflow: auto; }
+  [role="listitem"] { padding: 12px 16px 12px 36px; border-bottom: 1px solid #eee; cursor: pointer; }
+  [role="listitem"].active { background: #f0f2f5; }
+  #app { flex: 1; display: flex; flex-direction: column; }
+  #main { flex: 1; display: flex; flex-direction: column; }
+  #main header { padding: 12px 16px; background: #f0f2f5; border-bottom: 1px solid #ddd; }
+  #empty { padding: 40px; color: #888; }
+  .msgs { flex: 1; padding: 16px; color: #666; }
+</style>
+</head>
+<body>
+<div id="pane-side"><div role="grid" id="list"></div></div>
+<div id="app"><div id="empty">选择一个聊天</div></div>
+<script>
+// 场景由 URL 决定：?scenario=a | b
+const SCENARIOS = {
+  a: {
+    account: '8613900000001@c.us', pushname: '账号一',
+    chats: [
+      { id: '8613800138000@c.us', pushname: 'Tom', t: 1760000000 },
+      { id: '14155550123@c.us', name: 'Ann（客户）', pushname: 'Ann', t: 1760010000 },
+      { id: '99887766554433@lid', pushname: 'Jerry', t: 1760020000 },           // 只有 LID，查不到号码
+      { id: '120363001234567890@g.us', name: '某个群', t: 1760030000 },           // 群，应被忽略
+    ],
+    active: null,
+  },
+  b: {
+    account: '8613900000002@c.us', pushname: '账号二',
+    chats: [
+      { id: '8613800138000@c.us', name: '老汤（已保存）', pushname: 'Tom', t: 1760040000 }, // 与 a 重复，且保存了名字
+      { id: '447700900123@c.us', pushname: 'Bob', t: 1760050000 },
+      { id: '99887766554433@lid', pushname: 'Jerry', t: 1760060000, phoneNumber: '5511999990000' }, // 能反查到号码
+    ],
+    active: null,
+  },
+};
+const key = new URLSearchParams(location.search).get('scenario') || 'a';
+const data = structuredClone(SCENARIOS[key]);
+window.__WAB_MOCK__ = data;
+
+function title(c) {
+  const [user, server] = c.id.split('@');
+  return c.name || c.pushname || (server === 'c.us' ? '+' + user : 'LID ' + user);
+}
+function render() {
+  const list = document.getElementById('list');
+  list.replaceChildren(...data.chats.map((c) => {
+    const row = document.createElement('div');
+    row.setAttribute('role', 'listitem');
+    row.dataset.id = c.id;
+    row.classList.toggle('active', data.active === c.id);
+    const span = document.createElement('span');
+    span.title = title(c);
+    span.textContent = title(c);
+    row.appendChild(span);
+    row.addEventListener('click', () => open(c.id));
+    return row;
+  }));
+  const app = document.getElementById('app');
+  const c = data.chats.find((c) => c.id === data.active);
+  if (!c) { app.innerHTML = '<div id="empty">选择一个聊天</div>'; return; }
+  app.innerHTML = `<div id="main"><header><span title="${title(c)}">${title(c)}</span></header><div class="msgs">（消息区）</div></div>`;
+}
+function open(id) {
+  data.active = id;
+  render();
+  window.__WAB_MOCK_API__?.emit('chat.active_chat', null);
+}
+window.addEventListener('wab-mock-open', (e) => { data.active = e.detail; render(); });
+// 给测试脚本用
+window.mockOpen = open;
+window.mockNewMessage = (from, pushname) => {
+  window.__WAB_MOCK_API__.emit('chat.new_message', { from, pushname, t: Math.floor(Date.now() / 1000) });
+  render();
+};
+render();
+</script>
+</body>
+</html>

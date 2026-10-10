@@ -1,0 +1,15 @@
+{
+  "name": "wab",
+  "private": true,
+  "version": "0.1.0",
+  "description": "WhatsApp 多账号客户去重系统",
+  "workspaces": ["server", "extension"],
+  "scripts": {
+    "dev": "npm run dev -w server",
+    "build": "npm run build -w server && npm run build -w extension",
+    "build:ext": "npm run build -w extension",
+    "test": "npm test -w server",
+    "e2e": "npm run e2e -w extension",
+    "start": "npm start -w server"
+  }
+}
